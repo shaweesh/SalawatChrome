@@ -25,7 +25,7 @@ chrome.alarms.onAlarm.addListener(async () => {
           const prayerTime = new Date(currentTime.toDateString() + ' ' + value);
           let formattedPrayerTime = `${prayerTime.getHours()}:${prayerTime.getMinutes().toString().padStart(2, '0')}`;
 
-          if (key !== 'fajer' && key !== 'sunrise') {
+          if (key !== 'fajer' && key !== 'sunrise' && key !== 'dhuhur') {
             formattedPrayerTime = `${prayerTime.getHours() + 12}:${prayerTime.getMinutes().toString().padStart(2, '0')}`;
           }
 
