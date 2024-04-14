@@ -12,7 +12,7 @@ chrome.alarms.onAlarm.addListener(async () => {
     const currentTime = new Date();
     const currentDay = currentTime.getDate().toString().padStart(2, '0');
     const currentMonth = (currentTime.getMonth() + 1).toString().padStart(2, '0');
-    const currentTimeString = `${currentTime.getHours()}:${currentTime.getMinutes().toString().padStart(2, '0')}`;
+    const currentTimeString = getAdjustedTime();//`${currentTime.getHours()}:${currentTime.getMinutes().toString().padStart(2, '0')}`;
 
     // Filter the data for the current day and month
     const filteredItems = data.filter(item => parseInt(item.day) === parseInt(currentDay) && parseInt(item.month) === parseInt(currentMonth));
@@ -47,4 +47,15 @@ function showNotification(prayerName) {
     title: 'Salawat Reminder',
     message: `It's time for ${prayerName}!`
   });
+}
+
+function getAdjustedTime() {
+  //This code to fix current timezone to GMT+adjustment
+  const currentTime = new Date();
+  const timezoneOffsetInMinutes = currentTime.getTimezoneOffset();
+  const timezoneOffsetInHours = timezoneOffsetInMinutes / 60;
+  const adjustment = 2;
+  const adjustedHours = currentTime.getHours() + timezoneOffsetInHours + adjustment;
+  const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+  return `${adjustedHours}:${minutes}`;
 }
